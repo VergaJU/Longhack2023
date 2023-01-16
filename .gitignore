@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+Network_analysis/.idea/
+Network_analysis/data/DGE.csv
+Network_analysis/data/ensbl_to_symbol.csv
+Network_analysis/data/string_high_conf.csv
