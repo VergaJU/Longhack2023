@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import json
 import build_net
 import centrality
 import eval_genes
@@ -58,8 +58,13 @@ disease_dict = {"Not Disease related":0, "Disease related": 1}
 is_disease = list(nx.get_node_attributes(network, 'is_disease').values())
 is_disease = [disease_dict.get(item, item) for item in is_disease]
 
+network_js = nx.cytoscape_data(network)
+
+with open('Data/network_jnode.json', 'w') as outfile:
+    json.dump(network_js, outfile)
+
 # Plot graph, select color of the nod if age or disease related
-f = plt.figure()
-nx.draw_kamada_kawai(network, node_size=list(node_weight),node_color=is_disease, width=0.2, alpha=0.7)
-plt.show()
+#f = plt.figure()
+#nx.draw_kamada_kawai(network, node_size=list(node_weight),node_color=is_disease, width=0.2, alpha=0.7)
+#plt.show()
 #f.savefig("graph.png")

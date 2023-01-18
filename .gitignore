@@ -144,3 +144,4 @@ Network_analysis/Data/string_high_conf.csv
 Network_analysis/eval_genes.py
 Network_analysis/Data/network_jd.json
 Network_analysis/Data/.Rhistory
+network_viz/.idea/
