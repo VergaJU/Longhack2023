@@ -142,3 +142,5 @@ Network_analysis/Data/scored_genes.csv
 Network_analysis/Data/string_symbols.csv
 Network_analysis/Data/string_high_conf.csv
 Network_analysis/eval_genes.py
+Network_analysis/Data/network_jd.json
+Network_analysis/Data/.Rhistory
