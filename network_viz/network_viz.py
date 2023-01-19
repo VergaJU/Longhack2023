@@ -29,6 +29,7 @@ for node in G.nodes:
 
 traceRecode = []
 node_trace = go.Scatter(x=[], y=[], hovertext=[], text=[], marker_symbol=[],
+                        opacity=1,
                         mode='markers', textposition="bottom center",
                         hoverinfo="text", marker={'size': [], 'color': []})
 
@@ -46,7 +47,7 @@ for node in G.nodes():
     if disease == "Disease related":
         color = "red"
     else:
-        color = "lightblue"
+        color = "blue"
     logFC = G.nodes[node]["log2FoldChange"]
     score = G.nodes[node]["score"]
     hovertext = node + " with score : " + str(round(score,3)) + " and Expression: " + str(round(logFC,3)) + "<br>"\
