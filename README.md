@@ -1,5 +1,7 @@
 # Longhack2023: AGen-iNET
 
+ <img src="logo_vertical.png" alt="AGen-iNET" style="width:400px;height:500px;"> 
+
 ## GitHub repo of Longhack project
 
 The idea is to develop an end-to-end platform to analyse sequencing data and retrive biological meaningful information.
