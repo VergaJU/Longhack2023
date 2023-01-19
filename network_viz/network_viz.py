@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 import networkx
 import networkx as nx
 import plotly.graph_objs as go
@@ -8,7 +9,10 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-#network = json.load("Data/network_jnode.json")
+# Load results with scores and annotation
+
+df = pd.read_csv("Data/scored_genes.csv")
+
 # Load json file with network (cytoscape format)
 with open("Data/network_jnode.json") as file:
     network = json.load(file)
@@ -24,21 +28,33 @@ for node in G.nodes:
 # prepare plotpy scatterplot including coordintes and textual annotation
 
 traceRecode = []
-node_trace = go.Scatter(x=[], y=[], hovertext=[], text=[],
-                        mode='markers+text', textposition="bottom center",
-                        hoverinfo="text", marker={'size': 50, 'color': 'LightSkyBlue'})
+node_trace = go.Scatter(x=[], y=[], hovertext=[], text=[], marker_symbol=[],
+                        mode='markers', textposition="bottom center",
+                        hoverinfo="text", marker={'size': [], 'color': []})
+
 
 # Add annotation to the scatterplot nodes
 index=0
 for node in G.nodes():
     x, y = G.nodes[node]['pos']
     age = G.nodes[node]["is_age"]
+    if age == "Age related":
+        symbol = "diamond"
+    else:
+        symbol = "circle"
     disease = G.nodes[node]["is_disease"]
+    if disease == "Disease related":
+        color = "red"
+    else:
+        color = "lightblue"
     logFC = G.nodes[node]["log2FoldChange"]
     score = G.nodes[node]["score"]
     hovertext = node + " with score : " + str(round(score,3)) + " and Expression: " + str(round(logFC,3)) + "<br>"\
                 + "Result: " + age + " and " + disease
-    text = node
+    node_trace["marker"]["size"] += tuple([score*50])
+    node_trace["marker"]["color"] += tuple([color])
+    node_trace["text"] += tuple([node])
+    node_trace["marker_symbol"] += tuple([symbol])
     node_trace['x'] += tuple([x])
     node_trace['y'] += tuple([y])
     node_trace['hovertext'] += tuple([hovertext])
