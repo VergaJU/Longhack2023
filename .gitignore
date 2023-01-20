@@ -128,3 +128,24 @@ dmypy.json
 # Pyre type checker
 .pyre/
 sra_container/user-settings.mkfg
+Network_analysis/.idea/
+Network_analysis/data/DGE.csv
+Network_analysis/data/ensbl_to_symbol.csv
+Network_analysis/data/string_high_conf.csv
+sra_container/user-settings.mkfg
+Network_analysis/centrality.py
+Network_analysis/Data/.~lock.results.csv#
+Network_analysis/Data/DGE.csv
+Network_analysis/Data/ensbl_to_symbol.csv
+Network_analysis/Data/results.csv
+Network_analysis/Data/sarcopenia_disgenet.csv
+Network_analysis/Data/scored_genes.csv
+Network_analysis/Data/string_symbols.csv
+Network_analysis/Data/string_high_conf.csv
+Network_analysis/eval_genes.py
+Network_analysis/Data/network_jd.json
+Network_analysis/Data/.Rhistory
+network_viz/.idea/
+network_viz/layout.py
+Network_analysis/Data/network_jnode.json
+Network_analysis/test.csv
