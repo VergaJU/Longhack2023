@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import argparse
 from colour import Color
 import dash
-from dash import dcc
+from dash import dcc, dash_table
 from dash import html
 from textwrap import dedent as d
 from html.parser import HTMLParser
@@ -21,6 +21,9 @@ percentile=[0, 100]
 # Load results with scores and annotation
 
 df = pd.read_csv("Data/scored_genes.csv")
+df1 = df[["GeneName", "score"]].sort_values("score", ascending=False)
+df1["score"] = round(df["score"],3)
+
 
 # Load json file with network (cytoscape format)
 with open("Data/network_jnode.json") as file:
@@ -114,7 +117,8 @@ def network_graph(percRange):
 
     figure = {
         "data": traceRecode,
-        "layout": go.Layout(title='Results from the network analysis, the highest scored nodes are likely to be markers or drug targets', showlegend=False, hovermode='closest',
+        "layout": go.Layout(title='Modern problems require modern solutions',
+                            showlegend=False, hovermode='closest',
                             margin={'b': 40, 'l': 40, 'r': 40, 't': 40},
                             xaxis={'showgrid': False, 'zeroline': False, 'showticklabels': False},
                             yaxis={'showgrid': False, 'zeroline': False, 'showticklabels': False},
@@ -134,7 +138,7 @@ styles = {
 
 app.layout = html.Div([
     #########################Title
-    html.Div([html.H1("AGen-iNET")],
+    html.Div([html.H1(html.Img(id='logo', src=app.get_asset_url("logo_horizontal.png"), height="100"))],
              className="row",
              style={'textAlign': "center"}),
     #############################################################################################define the row
@@ -146,8 +150,9 @@ app.layout = html.Div([
                 children=[
                     ##############################################left side two input components
                     dcc.Markdown(d("""
-                            **Percentile scores to visualize**
-                            Slide the bar to define which node to visualize.
+                            **Percentile scores**
+                            
+                            Slide the bar to define which nodes visualize.
                             """)),
                     html.Div(
                         className="twelve columns",
@@ -174,8 +179,17 @@ app.layout = html.Div([
                             html.Br(),
                             html.Div(id='output-container-range-slider')
                         ],
-                        style={'height': '300px'}
+                        style={'height': '80'}
                     ),
+                    html.Div(
+                        className="twelve columns",
+                        children=[
+                            dcc.Markdown(d("""
+                            **Biomarkers**
+                            """)),
+                            dash_table.DataTable(df1.to_dict("records"),
+                                                 [{"name": i, "id": i} for i in df1.columns])]
+                    )
                 ]
             ),
             ############################################middle graph component
