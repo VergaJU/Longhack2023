@@ -180,21 +180,23 @@ app.layout = html.Div([
                         children=[
                             dcc.Markdown(d("""
                             **Gene Info**
+                            
                             Gene info.
                             """)),
                             html.Pre(id='hover-data', style=styles['pre'])
                         ],
-                        style={'height': '400px'}),
+                            style={'height': '200px'}),
                     html.Div(
                         className='twelve columns',
                         children=[
                             dcc.Markdown(d("""
-                            **Mutation Info**
-                            Get mutations in gene.
+                            **Drugs Info**
+                            
+                            Get drug interacting with the gene.
                             """)),
                             html.Pre(id='click-data', style=styles['pre'])
                         ],
-                        style={'height': '400px'})
+                        style={'height': '200px'})
                 ]
             )
         ]
