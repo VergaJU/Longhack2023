@@ -21,11 +21,11 @@ class build_network:
         '''
         string = pd.read_csv(self.string_db, sep="\t")
         data = pd.read_csv(self.genes)
-        if ("gene" not in data.columns or "log2FoldChange" not in data.columns ):
+        if ("GeneName" not in data.columns or "logFC" not in data.columns ):
             print("Wrong csv format")
             return pd.DataFrame()
         else:
-            genes = data.gene.to_list()
+            genes = data.GeneName.to_list()
             return string,genes
 
     def fetch_network(self):
