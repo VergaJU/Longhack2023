@@ -212,7 +212,7 @@ app.layout = html.Div([
                             dcc.Markdown(d("""
                             **Legend**
                             """)),
-                            html.Img(id='legend', src="Legend.svg", height="100")
+                            html.Img(id='legend', src=app.get_asset_url("Legend.png"), height="200")
                         ],
                         style={'height': '200px'}),
                 ]
