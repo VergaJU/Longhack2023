@@ -46,7 +46,10 @@ def network_graph(percRange):
     node_trace = go.Scatter(x=[], y=[], hovertext=[], text=[], marker_symbol=[],
                             opacity=1,
                             mode='markers', textposition="bottom center",
-                            hoverinfo="text", marker={'size': [], 'color': []})
+                            hoverinfo="text", marker={'size': [],
+                                                      'color': [],
+                                                      'line': dict(color=[], width=[]),
+                                                      'opacity': 1})
 
 
     # Add annotation to the scatterplot nodes
@@ -63,13 +66,23 @@ def network_graph(percRange):
             color = "red"
         else:
             color = "blue"
+        variant = G.nodes[node]["is_variant"]
+        if variant == "Variant related to Age AND Disease":
+            border = "black"
+        elif variant == "Variant NOT related to Age AND Disease":
+            border = "yellow"
+        else :
+            border = "green"
+        drug = G.nodes[node]["drugs"]
         logFC = G.nodes[node]["logFC"]
         score = G.nodes[node]["score"]
-        hovertext = node + " with score : " + str(round(score,3)) + " and Expression: " + str(round(logFC,3)) + "<br>"\
-                    + "Result: " + age + " and " + disease
+        hovertext = node + ":\nScore: " + str(round(score,3)) + "\nExpression: " + str(round(logFC,3)) + "\n"\
+                    + age + "\n" + disease
         node_trace["marker"]["size"] += tuple([score*50])
         node_trace["marker"]["color"] += tuple([color])
-        node_trace["text"] += tuple([node])
+        node_trace["marker"]["line"]["color"] += tuple([border])
+        node_trace["marker"]["line"]["width"] += tuple([score*5])
+        node_trace["text"] += tuple(["\n".join(drug)])
         node_trace["marker_symbol"] += tuple([symbol])
         node_trace['x'] += tuple([x])
         node_trace['y'] += tuple([y])
@@ -180,23 +193,28 @@ app.layout = html.Div([
                         children=[
                             dcc.Markdown(d("""
                             **Gene Info**
-                            
-                            Gene info.
                             """)),
                             html.Pre(id='hover-data', style=styles['pre'])
                         ],
-                            style={'height': '200px'}),
+                            style={'height': '150px'}),
                     html.Div(
                         className='twelve columns',
                         children=[
                             dcc.Markdown(d("""
                             **Drugs Info**
-                            
-                            Get drug interacting with the gene.
                             """)),
                             html.Pre(id='click-data', style=styles['pre'])
                         ],
-                        style={'height': '200px'})
+                        style={'height': '150px'}),
+                    html.Div(
+                        className='twelve columns',
+                        children=[
+                            dcc.Markdown(d("""
+                            **Legend**
+                            """)),
+                            html.Img(id='legend', src="Legend.svg", height="100")
+                        ],
+                        style={'height': '200px'}),
                 ]
             )
         ]
@@ -231,7 +249,9 @@ def display_hover_data(hoverData):
     dash.dependencies.Output('click-data', 'children'),
     [dash.dependencies.Input('my-graph', 'clickData')])
 def display_click_data(clickData):
-    return json.dumps(clickData, indent=2)
+    f = HTMLFilter()
+    f.feed(clickData['points'][0]['text'])
+    return f.text
 
 
 
