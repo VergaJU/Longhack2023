@@ -11,22 +11,38 @@ from dash import html
 from textwrap import dedent as d
 from html.parser import HTMLParser
 
+parser = argparse.ArgumentParser(description="Network representation with Plotly and Dash")
+requiredNamed = parser.add_argument_group('required arguments')
+requiredNamed.add_argument("-i", "--input_network",
+                           help="json containing the network in cytoscape format")
+requiredNamed.add_argument("-d", "--dataframe",
+                           help="annotated dataframe from network analysis")
+
+# GeneName, logFC
+args = parser.parse_args()
+
+network_json = args.input_network
+scored_genes = args.dataframe
+
+
+## Add arguments with file paths
 # import the css template, and pass the css template into dash
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "AGen-iNET"
+server = app.server
 
 percentile=[0, 100]
 
 # Load results with scores and annotation
 
-df = pd.read_csv("Data/scored_genes.csv")
+df = pd.read_csv(scored_genes)
 df1 = df[["GeneName", "score"]].sort_values("score", ascending=False)
 df1["score"] = round(df["score"],3)
 
 
 # Load json file with network (cytoscape format)
-with open("Data/network_jnode.json") as file:
+with open(network_json) as file:
     network = json.load(file)
 
 # Create networkx object
