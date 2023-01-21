@@ -73,8 +73,17 @@ filename = name+"_network_jnode.json"
 with open(filename, 'w') as outfile:
     json.dump(network_js, outfile)
 
+network_js = nx.cytoscape_data(network)
+
+with open('Data/network_jnode.json', 'w') as outfile:
+    json.dump(network_js, outfile)
+
 # Plot graph, select color of the nod if age or disease related
 #f = plt.figure()
+<<<<<<< HEAD
 #nx.draw_kamada_kawai(network, node_size=list(node_weight),node_color=is_age, width=0.2, alpha=0.7)
+=======
+#nx.draw_kamada_kawai(network, node_size=list(node_weight),node_color=is_disease, width=0.2, alpha=0.7)
+>>>>>>> network_viz
 #plt.show()
 #f.savefig("graph.png")
