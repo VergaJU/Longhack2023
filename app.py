@@ -18,7 +18,7 @@ def FileInput():
     ])
     
     csv_file = file_upload("Please a list of FASTQ file in csv format", accept=".csv",  multiple = True,  placeholder='Choose a file')
-    exp_design = file_upload("Please upload the experimental design in tab delimited format", accept=".csv",  multiple = True,  placeholder='Choose a file')
+    exp_design = file_upload("Please upload the experimental design in tab delimited format", accept=".csvcc",  multiple = True,  placeholder='Choose a file')
     
     put_text("Your files have been successfully inputed to the pipeline")
     
